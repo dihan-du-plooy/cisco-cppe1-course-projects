@@ -112,7 +112,13 @@ int main(void) {
     //CALCULATION (Inbetween Hour/Min Duration)
     int betweenHour, betweenMin;
     betweenHour = endTime.hr - startTime.hr;
-    betweenMin = endTime.min - startTime.min;
+    //min difference need to be calculated in totals otherwise it reaps negative values
+    if (endTime.hr == 0)
+        betweenMin = (24*60 + endTime.min) - (startTime.hr*60 + startTime.min);
+    else if (startTime.hr == 0)
+        betweenMin = (endTime.hr*60 + endTime.min) - (startTime.hr*60 + startTime.min);
+    else
+        betweenMin = (endTime.hr*60 + endTime.min) - (startTime.hr*60 + startTime.min);
 
     //OUTPUT
     if (betweenHour < 10 && betweenMin < 10)
