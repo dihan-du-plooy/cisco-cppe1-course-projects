@@ -111,8 +111,8 @@ int main(void) {
 
     //CALCULATION (Inbetween Hour/Min Duration)
     int betweenHour, betweenMin;
-    //hr difference needs to be calculated in totlas otherwise it will count a < hour difference as an hour and not min difference.
-    if ((endTime.min - startTime.min) < 60)
+    //hr difference needs to be calculated in totals otherwise it will count a < hour difference as an hour and not min difference.
+    if ((endTime.min - startTime.min) < 60 && (endTime.hr - startTime.hr) <= 1)
         betweenHour = 0;
     else
         betweenHour = endTime.hr - startTime.hr;
