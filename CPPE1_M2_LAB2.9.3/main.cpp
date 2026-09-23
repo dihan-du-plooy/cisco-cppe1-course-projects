@@ -118,12 +118,19 @@ int main(void) {
         betweenHour = endTime.hr - startTime.hr;
     
     //min difference need to be calculated in totals otherwise it reaps negative values
-    if (endTime.hr == 0)
+    //min difference then needs to get full hours deducted from it
+    if (endTime.hr == 0) {
         betweenMin = (24*60 + endTime.min) - (startTime.hr*60 + startTime.min);
-    else if (startTime.hr == 0)
+        betweenMin %= 60;
+    }
+    else if (startTime.hr == 0) {
         betweenMin = (endTime.hr*60 + endTime.min) - (startTime.hr*60 + startTime.min);
-    else
+        betweenMin %= 60;
+    }
+    else {
         betweenMin = (endTime.hr*60 + endTime.min) - (startTime.hr*60 + startTime.min);
+        betweenMin %= 60;
+    }
 
     //OUTPUT (with single digit display: 9:41 or 0:5)
     cout << "The duraion inbetween will be: " << betweenHour << ":" << betweenMin;
