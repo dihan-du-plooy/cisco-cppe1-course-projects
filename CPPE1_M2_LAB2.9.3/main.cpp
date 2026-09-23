@@ -111,24 +111,29 @@ int main(void) {
 
     //CALCULATION (Inbetween Hour/Min Duration)
     int betweenHour, betweenMin;
-    betweenHour = endTime.hr - startTime.hr;
-    //min difference need to be calculated in totals otherwise it reaps negative values
-    if (endTime.hr == 0)
-        betweenMin = (24*60 + endTime.min) - (startTime.hr*60 + startTime.min);
-    else if (startTime.hr == 0)
-        betweenMin = (endTime.hr*60 + endTime.min) - (startTime.hr*60 + startTime.min);
+    //hr difference needs to be calculated in totals otherwise it will count a < hour difference as an hour and not min difference.
+    if ((endTime.min - startTime.min) < 60 && (endTime.hr - startTime.hr) <= 1)
+        betweenHour = 0;
     else
+        betweenHour = endTime.hr - startTime.hr;
+    
+    //min difference need to be calculated in totals otherwise it reaps negative values
+    //min difference then needs to get full hours deducted from it
+    if (endTime.hr == 0) {
+        betweenMin = (24*60 + endTime.min) - (startTime.hr*60 + startTime.min);
+        betweenMin %= 60;
+    }
+    else if (startTime.hr == 0) {
         betweenMin = (endTime.hr*60 + endTime.min) - (startTime.hr*60 + startTime.min);
+        betweenMin %= 60;
+    }
+    else {
+        betweenMin = (endTime.hr*60 + endTime.min) - (startTime.hr*60 + startTime.min);
+        betweenMin %= 60;
+    }
 
-    //OUTPUT
-    if (betweenHour < 10 && betweenMin < 10)
-        cout << "The duraion inbetween will be: " << "0" << betweenHour << ":" << betweenMin << "0";
-    else if (betweenHour < 10 && betweenMin >= 10)
-        cout << "The duraion inbetween will be: " << "0" << betweenHour << ":" << betweenMin;
-    else if (betweenHour >=10 && betweenMin < 10)
-        cout << "The duraion inbetween will be: " << betweenHour << ":" << betweenMin << "0";
-    else 
-        cout << "The duraion inbetween will be: "<< betweenHour << ":" << betweenMin;
+    //OUTPUT (with single digit display: 9:41 or 0:5)
+    cout << "The duraion inbetween will be: " << betweenHour << ":" << betweenMin;
         
     return 0;
 }
