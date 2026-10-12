@@ -11,7 +11,12 @@ Write a function equipped with the following features:
 using namespace std;
 
 bool isLeap(int year) { 
-
+if (year % 100 != 0 && year % 4 == 0)       //leap year requirements
+    return 1;
+else if (year % 400 == 0 && year % 4 == 0)      //leap year requirements
+    return 1;
+else
+    return 0;
 }
 
 int main(void) {
