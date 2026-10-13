@@ -75,7 +75,37 @@ int dayOfYear(Date date) {
 }
 
 int daysBetween(Date d1, Date d2) {
-    
+    int days = 0;
+    //work out if the year difference is positive
+    if(d2.year - d1.year >= 0) {
+        //work out if the day difference is positive in case of a same year calculation
+        if (d2.year - d1.year == 0 && dayOfYear(d2) - dayOfYear(d1) < 0)            
+            return -1;                                                            
+        else
+            //i must be less than because condition should not execute for a same year calculation
+            //i must be d1.year + 1 because we don't want to add days for since year yet, only inbetween years
+            for(int i = d1.year + 1; i < d2.year; i++) {
+                if (isLeap(i))
+                    days += 366;
+                else
+                    days += 365;
+            }
+        //add the since year days and dynamically compensate for it being a leap year and not being a full year
+        if (isLeap(d1.year) && d2.year - d2.year != 0) {
+            days += 366 - dayOfYear(d1);
+            days += dayOfYear(d2);
+        }
+        else if (d2.year - d2.year != 0) {
+            days += 365 - dayOfYear(d1);
+            days += dayOfYear(d2);
+        }
+        //for same year calculation
+        else 
+            days += dayOfYear(d2) - dayOfYear(d1);
+        return days;
+    }
+    else
+        return -1;
 }
 
 int main(void) {
