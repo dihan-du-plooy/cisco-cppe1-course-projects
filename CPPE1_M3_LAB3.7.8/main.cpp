@@ -8,6 +8,16 @@ Create 2 overloaded functions:
 #include <cmath>
 using namespace std;
 
+int increment (int &a, int b = 1) {
+    a += b;
+    return a;
+}
+
+float increment (float &a, int b = 1) {
+    a += b;
+    return a;
+}
+
 int main(void) {
 
 	int intvar = 0;
