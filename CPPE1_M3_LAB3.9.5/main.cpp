@@ -9,50 +9,54 @@ Write a program that tries to "predict" the numbers for a lottery:
 */
 
 #include <iostream>
+#include <limits>
 #include <cstdlib>
 #include <ctime>
 
 using namespace std;
 
+void randomSelection( int range, int ballCount) {
+	//srand set and rand array population
+	srand(time(NULL));
+	int *predNum = new int[ballCount];
+	for (int i = 0; i < ballCount ; i++) {
+		//first run only
+		if (i == 0) {
+			predNum[i] = rand() % range + 1;	//to ensure max rand amount stays within range
+		}
+		//any other element
+		else {
+			//set first
+			predNum[i] = rand() % range + 1;
+			//check for duplicates without checking same element (could be optimised to stop checking for elements not yet set)
+			for (int j = 0; j < i; j++) {
+				if (predNum[i] == predNum[j]) {
+					do {
+						predNum[i] = rand() % range + 1;
+					} while (predNum[i] == predNum[j]);
+					j = -1;
+				}
+			}
+		}
+		cout << predNum[i] << " ";
+	}
+	delete[] predNum;
+}
+
 int main(void) {
 	//set variables
 	int maxball;
 	int ballsno;
-    bool numAlreadyUsed = true;
-
-	//User input
+	//User input and validation
 	cout << "Max ball number? ";
 	cin >> maxball;
 	cout << "How many balls? ";
 	cin >> ballsno;
-
-	//srand set and rand array population
-	srand(time(NULL));
-	int *predNum = new int[ballsno];
-    for (int i = 0; i < ballsno ; i++) {
-		//first run only (optimise by building predefined function)
-		if (i == 0) {
-			predNum[i] = rand() % maxball + 1;	//to ensure max rand amount stays within range
-			cout << predNum[i] << " ";
-		}
-		//any other element
-        else {
-			//set first
-			predNum[i] = rand() % maxball + 1;
-			//check for duplicates without checking same element (could be optimised to stop checking for elements not yet set)
-			for (int j = 0; j < ballsno && j != i; j++) {
-				if (predNum[i] == predNum[j]) {
-					do {
-						predNum[i] = rand() % maxball + 1;
-					} while (predNum[i] == predNum[j]);
-					continue;
-				}
-				else 
-					continue;
-			}
-			cout << predNum[i] << " ";
-		}
-    }
-    delete[] predNum;
+	while (maxball < ballsno) {
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "The ball number drawn can't be bigger than the maximum number of balls. Input ball number again: ";
+		cin >> ballsno;
+	}
+	randomSelection(maxball, ballsno);
 	return 0;
 }
