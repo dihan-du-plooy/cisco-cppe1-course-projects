@@ -20,25 +20,16 @@ void randomSelection( int range, int ballCount) {
 	srand(time(NULL));
 	int *predNum = new int[ballCount];
 	for (int i = 0; i < ballCount ; i++) {
-		//first run only
-		if (i == 0) {
-			predNum[i] = rand() % range + 1;	//to ensure max rand amount stays within range
-		}
-		//any other element
-		else {
-			//set first
-			predNum[i] = rand() % range + 1;
-			//check for duplicates without checking same element (could be optimised to stop checking for elements not yet set)
-			for (int j = 0; j < i; j++) {
-				if (predNum[i] == predNum[j]) {
-					do {
-						predNum[i] = rand() % range + 1;
-					} while (predNum[i] == predNum[j]);
-					j = -1;
-				}
+		//check for duplicates without checking same/past current element
+		for (int j = 0; j < i; j++) {
+			if (predNum[i] == predNum[j]) {
+				do {
+					predNum[i] = rand() % range + 1;
+				} while (predNum[i] == predNum[j]);
+				j = -1;
 			}
 		}
-		cout << predNum[i] << " ";
+	cout << predNum[i] << " ";
 	}
 	delete[] predNum;
 }
