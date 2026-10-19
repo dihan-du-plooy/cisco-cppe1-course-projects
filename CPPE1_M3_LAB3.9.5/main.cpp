@@ -20,6 +20,7 @@ void randomSelection( int range, int ballCount) {
 	srand(time(NULL));
 	int *predNum = new int[ballCount];
 	for (int i = 0; i < ballCount ; i++) {
+		predNum[i] = rand() % range + 1;
 		//check for duplicates without checking same/past current element
 		for (int j = 0; j < i; j++) {
 			if (predNum[i] == predNum[j]) {
@@ -29,7 +30,7 @@ void randomSelection( int range, int ballCount) {
 				j = -1;
 			}
 		}
-	cout << predNum[i] << " ";
+		cout << predNum[i] << " ";
 	}
 	delete[] predNum;
 }
