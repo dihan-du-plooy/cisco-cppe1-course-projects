@@ -15,12 +15,18 @@ using namespace std;
 //elno stores number of elements & elements stores the dynamically allocated data
 struct Collection {
 	int  elno;
-
 	int *elements;
 };
 
-void AddToCollection(Collection &col, int element) {
-	
+void AddToCollection(Collection &col, int element) { 
+	int *tempArray = new int[col.elno + 1];
+	for (int i = 0; i < col.elno; i++) {
+		tempArray[i] = col.elements[i];
+	}
+	tempArray[col.elno] = element;
+	delete[] col.elements;		//delete the old array to prevent memory leak
+	col.elements = tempArray;		//you can assign a pointer to another pointer, col.elements not own the array tempArray did
+	col.elno++;
 }
 
 void PrintCollection(Collection col) {
