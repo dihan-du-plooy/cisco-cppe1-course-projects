@@ -25,7 +25,7 @@ void AddToCollection(Collection &col, int element) {
 	}
 	tempArray[col.elno] = element;
 	delete[] col.elements;		//delete the old array to prevent memory leak
-	col.elements = tempArray;		//you can assign a pointer to another pointer, col.elements not own the array tempArray did
+	col.elements = tempArray;		//you can assign a pointer to another pointer, col.elements now own the array tempArray did
 	col.elno++;
 }
 
