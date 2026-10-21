@@ -26,8 +26,8 @@ void AddToCollection(Collection &col, int element) {
 	tempArray[col.elno] = element;
 	delete[] col.elements;		//delete the old array to prevent memory leak
 	col.elements = tempArray;		//you can assign a pointer to another pointer, col.elements now own the array tempArray did
-	col.elno++;
-}
+	col.elno++;		//from course - instead of adding col.elno++ here, you can do it in line 26 to kill 2 birds with one stone
+}					//this works because the expression uses the old value first then increments it (post incrementation rule)
 
 void PrintCollection(Collection col) {
 	cout << "[ ";
